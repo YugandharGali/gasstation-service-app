@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-@Table(name = "user", uniqueConstraints = @UniqueConstraint(name = "uc_username", columnNames = { "username", "accessToken" }))
+@Table(name = "user", uniqueConstraints = @UniqueConstraint(name = "uc_username", columnNames = { "username", "accessToken"}))
 public class UserDO {
 
 	@Id

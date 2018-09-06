@@ -17,7 +17,7 @@ import org.springframework.http.HttpStatus;
 
 import net.bigpoint.gasstation.service.UserService;
 
-@WebFilter("/gasstation/*")
+@WebFilter("/v1/gasstation/*")
 public class GasStationHttpRequestFilter implements Filter {
 
 	@Autowired
@@ -31,7 +31,7 @@ public class GasStationHttpRequestFilter implements Filter {
 		String accessToken = request.getHeader("api_key");
 		System.out.println("accessToken :" + accessToken);
 		if (null == accessToken) {
-			response.setStatus(HttpStatus.UNAUTHORIZED.value());
+			response.sendError(HttpStatus.BAD_REQUEST.value(), "Access Token (api_key) is null.");
 			return;
 		}
 
@@ -41,12 +41,10 @@ public class GasStationHttpRequestFilter implements Filter {
 		if (validate) {
 			chain.doFilter(req, res);
 		} else {
-			response.setStatus(HttpStatus.NOT_FOUND.value());
+			response.sendError(HttpStatus.NOT_FOUND.value(), "Access Token expired / invalid.");
 			return;
 		}
-
-		chain.doFilter(req, res);
-
+		return;
 	}
 
 	@Override

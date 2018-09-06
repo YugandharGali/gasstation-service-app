@@ -3,6 +3,8 @@ package net.bigpoint.gasstation.service;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.Base64;
+import java.util.Random;
+import java.util.UUID;
 
 import javax.persistence.EntityNotFoundException;
 
@@ -35,14 +37,42 @@ public class UserServiceImpl implements UserService {
 		if (userDO == null) {
 			throw new EntityNotFoundException("Could not find User entity.");
 		}
+		if (userDO != null) {
+			LocalDateTime currentDateTime = ZonedDateTime.now().toLocalDateTime();
+			LocalDateTime expireDateTime = userDO.getExpireDate().toLocalDateTime();
+			boolean retVal = currentDateTime.isBefore(expireDateTime);
+			if (retVal) {
+				return userDO;
+			} else {
+				// mark token as expired.
+				UserDO user = userRepository.findOne(userDO.getUserid());
+				user.setExpired(Boolean.TRUE);
+				userRepository.save(user);
+			}
+		}
 		return userDO;
 	}
 
 	@Override
 	public UserDO generateAccessToken(String username, String password) throws ConstraintsViolationException {
 
-		String accessToken = Base64.getEncoder().withoutPadding()
-				.encodeToString((username + ":" + password).getBytes());
+		UserDO userDO = userRepository.findUser(username, password);
+		if (userDO != null) {
+			LocalDateTime currentDateTime = ZonedDateTime.now().toLocalDateTime();
+			LocalDateTime expireDateTime = userDO.getExpireDate().toLocalDateTime();
+			boolean retVal = currentDateTime.isBefore(expireDateTime);
+			if (retVal) {
+				return userDO;
+			} else {
+				// mark token as expired.
+				UserDO user = userRepository.findOne(userDO.getUserid());
+				user.setExpired(Boolean.TRUE);
+				userRepository.save(user);
+			}
+		}
+
+		String random = UUID.randomUUID().toString();
+		String accessToken = Base64.getEncoder().withoutPadding().encodeToString(random.getBytes());
 		ZonedDateTime dateCreated = ZonedDateTime.now().plusMinutes(30);
 		UserDO user = new UserDO(username, password, accessToken, dateCreated);
 		UserDO userRes;
@@ -61,21 +91,21 @@ public class UserServiceImpl implements UserService {
 		if (userDO == null) {
 			System.out.println("Could not find User entity.");
 		} else {
-			LocalDateTime currentDateTime = ZonedDateTime.now(). toLocalDateTime();
+			LocalDateTime currentDateTime = ZonedDateTime.now().toLocalDateTime();
 			LocalDateTime expireDateTime = userDO.getExpireDate().toLocalDateTime();
 			boolean retVal = currentDateTime.isBefore(expireDateTime);
 			System.out.println("currentDate :" + currentDateTime);
 			System.out.println("expireDate :" + expireDateTime);
-			System.out.println("expireDate > currentDate :"+ retVal);
-			if(retVal) {
+			System.out.println("expireDate > currentDate :" + retVal);
+			if (retVal) {
 				return true;
-			}else {
+			} else {
 				// mark token as expired.
 				UserDO user = userRepository.findOne(userDO.getUserid());
 				user.setExpired(Boolean.TRUE);
 				userRepository.save(user);
 			}
-			
+
 		}
 		return false;
 	}
