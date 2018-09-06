@@ -39,7 +39,7 @@ public class GasPumpDO {
 
 	@Column(nullable = false)
 	@NotNull(message = "Amount can not be null!")
-	private String amountInLiters;
+	private double amountInLiters;
 
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "priceid")
@@ -51,7 +51,7 @@ public class GasPumpDO {
 	private GasPumpDO() {
 	}
 
-	public GasPumpDO(GasType gastype, String amountInLiters) {
+	public GasPumpDO(GasType gastype, double amountInLiters) {
 		this.gastype = gastype;
 		this.amountInLiters = amountInLiters;
 	}
@@ -80,11 +80,11 @@ public class GasPumpDO {
 		this.gastype = gastype;
 	}
 
-	public String getAmountInLiters() {
+	public double getAmountInLiters() {
 		return amountInLiters;
 	}
 
-	public void setAmountInLiters(String amountInLiters) {
+	public void setAmountInLiters(double amountInLiters) {
 		this.amountInLiters = amountInLiters;
 	}
 
