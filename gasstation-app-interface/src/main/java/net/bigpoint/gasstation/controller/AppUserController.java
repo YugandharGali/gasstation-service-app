@@ -12,7 +12,7 @@ import net.bigpoint.assessment.gasstation.exceptions.ConstraintsViolationExcepti
 import net.bigpoint.gasstation.controller.mapper.UserMapper;
 import net.bigpoint.gasstation.datatransferobject.UserDTO;
 import net.bigpoint.gasstation.domainobject.UserDO;
-import net.bigpoint.gasstation.service.driver.UserService;
+import net.bigpoint.gasstation.service.UserService;
 
 @RestController
 @RequestMapping("v1/user")

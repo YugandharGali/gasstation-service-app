@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
-import net.bigpoint.gasstation.service.driver.UserService;
+import net.bigpoint.gasstation.service.UserService;
 
 @WebFilter("/gasstation/*")
 public class GasStationHttpRequestFilter implements Filter {

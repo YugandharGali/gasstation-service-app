@@ -1,4 +1,4 @@
-package net.bigpoint.gasstation.service.driver;
+package net.bigpoint.gasstation.service;
 
 import javax.persistence.EntityNotFoundException;
 
