@@ -40,10 +40,10 @@ public class GasPumpDO {
 	@NotNull(message = "Amount can not be null!")
 	private double amountInLiters;
 
-	@OneToOne(fetch = FetchType.EAGER, mappedBy="gasPumpDO")
+	@OneToOne(fetch = FetchType.EAGER, mappedBy = "gasPumpDO")
 	private PriceListDO priceListDO;
-	
-	@OneToMany(mappedBy = "gasSales")
+
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "gasSales")
 	private List<SalesListDO> salesListDO;
 
 	private GasPumpDO() {

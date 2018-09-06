@@ -36,7 +36,7 @@ public class SalesListDO {
 	@Column(nullable = false)
 	private boolean priceExceed = false;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "pump_id_fk")
 	private GasPumpDO gasSales;
 

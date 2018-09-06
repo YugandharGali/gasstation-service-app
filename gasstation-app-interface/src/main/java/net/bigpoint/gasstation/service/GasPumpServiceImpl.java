@@ -110,7 +110,7 @@ public class GasPumpServiceImpl implements GasStation {
 		for (SalesListDO salesListDO : salesListDOs) {
 			GasPumpDO gasPumpDO = salesListDO.getGasSales();
 			double price = gasPumpDO.getPriceListDO().getSellingPrice();
-			revenue *= price;
+			revenue += price * salesListDO.getLiters();
 		}
 		return revenue;
 	}
