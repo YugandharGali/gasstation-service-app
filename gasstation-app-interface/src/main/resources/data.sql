@@ -10,12 +10,19 @@
 */
 
 
--- Create 2 user records
+-- Create user records
 insert into user (userid, date_created, username, password, access_token, expire_date, expired) 
 values (1, now(), 'yuga', 'yuga123', 'abcd', now(), false);
 
--- Create 3 gaspump records
---insert into gaspump (pumpid, date_created, gastype, amount_in_liters) values (1, now(), 'REGULAR', 200);
---insert into gaspump (pumpid, date_created, gastype, amount_in_liters) values (2, now(), 'SUPER', 100);
---insert into gaspump (pumpid, date_created, gastype, amount_in_liters) values (3, now(), 'DIESEL', 300);
+-- Create gaspump records
+insert into gaspump (pumpid, date_created, gas_type, amount_in_liters) values (1, now(), 'REGULAR', 200);
+insert into gaspump (pumpid, date_created, gas_type, amount_in_liters) values (2, now(), 'SUPER', 100);
+--insert into gaspump (pumpid, date_created, gas_type, amount_in_liters) values (3, now(), 'DIESEL', 300);
 
+-- Create price records
+insert into price_list(priceid,date_created,selling_price,pumpid) values(1,now(),20.0,1);
+insert into price_list(priceid,date_created,selling_price,pumpid) values(2,now(),10.0,2);
+
+-- Create Sales records
+insert into sales_list(salesid,date_created,liters,no_gas,price_exceed,pump_id_fk) values(1,now(),20.0,false,false,1);
+insert into sales_list(salesid,date_created,liters,no_gas,price_exceed,pump_id_fk) values(2,now(),5.0,false,false,1);

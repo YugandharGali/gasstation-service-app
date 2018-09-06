@@ -24,7 +24,6 @@ public final class GasPump {
 
 	public void pumpGas(double amount) {
 		this.amount -= amount;
-
 		// simulate that it takes time to pump some gas
 		try {
 			Thread.sleep((long) (amount * 100));

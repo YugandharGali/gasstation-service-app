@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -29,16 +30,18 @@ public class PriceListDO {
 	@NotNull(message = "Selling Price can not be null!")
 	private double sellingPrice;
 
-	@OneToOne(fetch = FetchType.EAGER, mappedBy = "priceListDO")
+	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "pumpid")
 	private GasPumpDO gasPumpDO;
 
 	public PriceListDO() {
 	}
 
-	public PriceListDO(double sellingPrice) {
+	public PriceListDO(GasPumpDO gasPumpDO, double sellingPrice) {
+		this.gasPumpDO = gasPumpDO;
 		this.sellingPrice = sellingPrice;
 	}
-
+	
 	public Long getPriceid() {
 		return priceid;
 	}

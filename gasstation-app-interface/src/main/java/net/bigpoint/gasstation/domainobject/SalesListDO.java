@@ -28,7 +28,7 @@ public class SalesListDO {
 
 	@Column(nullable = false)
 	@NotNull(message = "Liters can not be null!")
-	private String liters;
+	private double liters;
 
 	@Column(nullable = false)
 	private boolean noGas = false;
@@ -37,10 +37,17 @@ public class SalesListDO {
 	private boolean priceExceed = false;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "gaspump_id_fkb")
+	@JoinColumn(name = "pump_id_fk")
 	private GasPumpDO gasSales;
 
 	private SalesListDO() {
+	}
+	
+	public SalesListDO(double amountInLiters,boolean noGas, boolean priceExceed, GasPumpDO gasPumpDO) {
+		this.liters=amountInLiters;
+		this.noGas=noGas;
+		this.priceExceed=priceExceed;
+		this.gasSales=gasPumpDO;
 	}
 
 	public ZonedDateTime getDateCreated() {
@@ -59,11 +66,11 @@ public class SalesListDO {
 		this.salesid = salesid;
 	}
 
-	public String getLiters() {
+	public double getLiters() {
 		return liters;
 	}
 
-	public void setLiters(String liters) {
+	public void setLiters(double liters) {
 		this.liters = liters;
 	}
 

@@ -35,7 +35,7 @@ public class GasStationController {
 	@PostMapping("/addGasPump")
 	@ResponseStatus(HttpStatus.CREATED)
 	public String addGasPump(@RequestParam GasType gasType, @RequestParam double amount) {
-		gasStation.addGasPump(GasPumpMapper.makeGasPump(gasType,amount));
+		gasStation.addGasPump(GasPumpMapper.makeGasPump(gasType, amount));
 		return "GasStation Added Successfully.";
 	}
 
@@ -45,39 +45,41 @@ public class GasStationController {
 	}
 
 	@PostMapping("/buyGas/{amountInLiters}/{maxPricePerLiter}")
-	public double buyGas(GasType type, @Valid @PathVariable double amountInLiters,
-			@Valid @PathVariable double maxPricePerLiter) throws NotEnoughGasException, GasTooExpensiveException {
-		return 0;
+	public double buyGas(@RequestParam GasType type, @RequestParam double amountInLiters,
+			@RequestParam double maxPricePerLiter) throws NotEnoughGasException, GasTooExpensiveException {
+		return gasStation.buyGas(type, amountInLiters, maxPricePerLiter);
 	}
 
 	@GetMapping("/getRevenue")
 	public double getRevenue() {
-		return 0;
+		return gasStation.getRevenue();
 	}
 
 	@GetMapping("/getNumberOfSales")
 	public int getNumberOfSales() {
-		return 0;
+		return gasStation.getNumberOfSales();
 	}
 
 	@GetMapping("/getNumberOfCancellationsNoGas")
 	public int getNumberOfCancellationsNoGas() {
-		return 0;
+		return gasStation.getNumberOfCancellationsNoGas();
 	}
 
 	@GetMapping("/getNumberOfCancellationsTooExpensive")
 	public int getNumberOfCancellationsTooExpensive() {
-		return 0;
+		return gasStation.getNumberOfCancellationsTooExpensive();
 	}
 
 	@PostMapping("/getPrice")
-	public double getPrice(GasType type) {
-		return 0;
+	public double getPrice(@RequestParam GasType type) {
+		return gasStation.getPrice(type);
 	}
 
 	@PostMapping("/setPrice/{price}")
-	public void setPrice(GasType type, double price) {
-
+	@ResponseStatus(HttpStatus.CREATED)
+	public String setPrice(@RequestParam GasType type, @RequestParam double sellingPrice) {
+		gasStation.setPrice(type, sellingPrice);
+		return "Price set Successfully.";
 	}
 
 }

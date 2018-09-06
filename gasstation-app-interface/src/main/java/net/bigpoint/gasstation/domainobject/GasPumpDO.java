@@ -10,7 +10,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -35,14 +34,13 @@ public class GasPumpDO {
 
 	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
-	private GasType gastype;
+	private GasType gasType;
 
 	@Column(nullable = false)
 	@NotNull(message = "Amount can not be null!")
 	private double amountInLiters;
 
-	@OneToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "priceid")
+	@OneToOne(fetch = FetchType.EAGER, mappedBy="gasPumpDO")
 	private PriceListDO priceListDO;
 	
 	@OneToMany(mappedBy = "gasSales")
@@ -51,8 +49,8 @@ public class GasPumpDO {
 	private GasPumpDO() {
 	}
 
-	public GasPumpDO(GasType gastype, double amountInLiters) {
-		this.gastype = gastype;
+	public GasPumpDO(GasType gasType, double amountInLiters) {
+		this.gasType = gasType;
 		this.amountInLiters = amountInLiters;
 	}
 
@@ -73,11 +71,11 @@ public class GasPumpDO {
 	}
 
 	public GasType getGastype() {
-		return gastype;
+		return gasType;
 	}
 
-	public void setGastype(GasType gastype) {
-		this.gastype = gastype;
+	public void setGastype(GasType gasType) {
+		this.gasType = gasType;
 	}
 
 	public double getAmountInLiters() {
