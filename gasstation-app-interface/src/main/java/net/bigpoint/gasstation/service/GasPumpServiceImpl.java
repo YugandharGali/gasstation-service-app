@@ -108,9 +108,11 @@ public class GasPumpServiceImpl implements GasStation {
 		Iterable<SalesListDO> salesListDOs = salesListRepository.findAll();
 		double revenue = 0;
 		for (SalesListDO salesListDO : salesListDOs) {
-			GasPumpDO gasPumpDO = salesListDO.getGasSales();
-			double price = gasPumpDO.getPriceListDO().getSellingPrice();
-			revenue += price * salesListDO.getLiters();
+			if (!salesListDO.isNoGas() && !salesListDO.isPriceExceed()) {
+				GasPumpDO gasPumpDO = salesListDO.getGasSales();
+				double price = gasPumpDO.getPriceListDO().getSellingPrice();
+				revenue += price * salesListDO.getLiters();
+			}
 		}
 		return revenue;
 	}
